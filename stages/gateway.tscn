@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvxcbhexg6d05"]
+
+[ext_resource type="Script" path="res://stages/scripts/Gateway.cs" id="1_pnvxy"]
+
+[node name="gateway" type="Node2D"]
+script = ExtResource("1_pnvxy")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 355.0
+offset_top = 122.0
+offset_right = 776.0
+offset_bottom = 506.0
+
+[node name="username_edit" type="TextEdit" parent="Control"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 134.0
+offset_right = 371.0
+offset_bottom = 199.0
+placeholder_text = "Enter your username"
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 229.0
+offset_right = 243.0
+offset_bottom = 287.0
+text = "Join"
+
+[node name="welcome" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 71.0
+offset_right = 242.0
+offset_bottom = 123.0
+text = "Welcome to
+The Brutal Flask"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
