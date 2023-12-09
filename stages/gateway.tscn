@@ -13,14 +13,6 @@ offset_top = 122.0
 offset_right = 776.0
 offset_bottom = 506.0
 
-[node name="username_edit" type="TextEdit" parent="Control"]
-layout_mode = 0
-offset_left = 73.0
-offset_top = 134.0
-offset_right = 371.0
-offset_bottom = 199.0
-placeholder_text = "Enter your username"
-
 [node name="Button" type="Button" parent="Control"]
 layout_mode = 0
 offset_left = 73.0
@@ -38,4 +30,23 @@ offset_bottom = 123.0
 text = "Welcome to
 The Brutal Flask"
 
+[node name="user_line" type="LineEdit" parent="Control"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 129.0
+offset_right = 251.0
+offset_bottom = 160.0
+placeholder_text = "Enter username"
+
+[node name="alert" type="Label" parent="Control"]
+visible = false
+layout_mode = 0
+offset_left = 75.0
+offset_top = 174.0
+offset_right = 225.0
+offset_bottom = 205.0
+text = "TEXTO DE RELLENO"
+
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="button_up" from="Control/Button" to="." method="OnButtonUp"]

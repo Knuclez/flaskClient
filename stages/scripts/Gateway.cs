@@ -13,12 +13,36 @@ public partial class Gateway : Node
 	private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
 		GD.Print(responseCode);
+		string stringedBody = System.Text.Encoding.UTF8.GetString(body);
+		if (stringedBody == "1")
+		{
+			PopUIAlert("Wrong credentials");
+			return;
+		}
+
+		User userSingleton = GetNode<User>("/root/User");
+		userSingleton.SetUsername(stringedBody);
+
+		GetTree().ChangeSceneToFile("res://stages/landing.tscn");
 	}
 
 	private void OnButtonUp()
 	{
-		//seguir aca
-		//string[] headers = 
-		//_requester.Request("127.0.0.1:8000/chat/canario_brutal", headers, HttpClient.Method.Post, json);
+		string texto = GetNode<LineEdit>("Control/user_line").Text;
+		if (texto == "")
+		{
+			return;
+		}
+		string[] headers = new string[] {"Content-Type: text/html"};
+		_requester.Request("http://127.0.0.1:8000/users", headers, HttpClient.Method.Post, texto);
+	}
+
+	private async void PopUIAlert(string alertText)
+	{
+		Label alertLabel = GetNode<Label>("Control/alert");
+		alertLabel.Text = alertText;
+		alertLabel.Visible = true;
+		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
+		alertLabel.Visible = false;
 	}
 }
