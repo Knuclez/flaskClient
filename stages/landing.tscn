@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ejiprcrwdjp8"]
+[gd_scene load_steps=3 format=3 uid="uid://ejiprcrwdjp8"]
 
 [ext_resource type="Script" path="res://stages/scripts/Landing.cs" id="1_8dtfw"]
+[ext_resource type="Texture2D" uid="uid://dnkjlt4d8xuof" path="res://GUI/images/corona_chat.png" id="2_tmpqx"]
 
 [node name="landing" type="Node2D"]
 script = ExtResource("1_8dtfw")
@@ -11,9 +12,44 @@ anchors_preset = 0
 offset_right = 1156.0
 offset_bottom = 648.0
 
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 24.0
+offset_right = 153.0
+offset_bottom = 60.0
+color = Color(0.486275, 0.160784, 0.0313726, 1)
+
 [node name="user_tag" type="Label" parent="Control"]
 layout_mode = 0
-offset_left = 445.0
-offset_top = 257.0
-offset_right = 485.0
-offset_bottom = 280.0
+offset_left = 32.0
+offset_top = 29.0
+offset_right = 143.0
+offset_bottom = 52.0
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 7.0
+offset_right = 175.0
+offset_bottom = 78.0
+texture = ExtResource("2_tmpqx")
+expand_mode = 1
+
+[node name="mapButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 442.0
+offset_top = 187.0
+offset_right = 657.0
+offset_bottom = 375.0
+text = "Ir al mapa"
+
+[node name="cardsButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 850.0
+offset_top = 369.0
+offset_right = 960.0
+offset_bottom = 431.0
+text = "Ver cartas"
+
+[connection signal="button_up" from="Control/mapButton" to="." method="OnMapButtonUp"]

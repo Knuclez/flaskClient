@@ -14,4 +14,9 @@ public partial class Landing : Node
 	public override void _Process(double delta)
 	{
 	}
+
+	private void OnMapButtonUp()
+	{
+		GetTree().ChangeSceneToFile("res://stages/map.tscn");
+	}
 }

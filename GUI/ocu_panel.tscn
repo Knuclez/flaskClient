@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://dg0oe8dncwv0u"]
+
+[ext_resource type="Script" path="res://GUI/scripts/OcupantActions.cs" id="1_urlhh"]
+
+[node name="ocuPanel" type="Panel"]
+offset_right = 188.0
+offset_bottom = 40.0
+script = ExtResource("1_urlhh")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 136.0
+offset_bottom = 36.0
+text = "testo de relleno"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 6.0
+offset_right = 180.0
+offset_bottom = 35.0
+text = "M"
