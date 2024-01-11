@@ -44,4 +44,9 @@ public partial class InMapGUI : Node
 			}	
 		}
 	}
+
+	public void PopConfirmation()
+	{
+		GD.Print("ha sucedio");
+	}
 }

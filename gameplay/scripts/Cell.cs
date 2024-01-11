@@ -22,6 +22,9 @@ public partial class Cell : Node2D
 			Ocupant ocuInstance = ocupantScene.Instantiate<Ocupant>();
 			ocuInstance.Init(ocu);
 			AddChild(ocuInstance);
+			
+			//custom testing code
+			//GetNode<Button>("Button").ButtonUp += ocuInstance.OnCustomButton;
 		}
 	}
 	public override void _Process(double delta)
@@ -31,5 +34,15 @@ public partial class Cell : Node2D
 	public Vector2I GetCellCoords()
 	{
 		return _cellCoords;
+	}
+
+	public int GetX()
+	{
+		return _cellCoords.X;
+	}
+
+	public int GetY()
+	{
+		return _cellCoords.Y;
 	}
 }

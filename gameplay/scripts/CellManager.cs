@@ -1,18 +1,20 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Newtonsoft.Json;
 
 public partial class CellManager : Node
 {
     [Export] private InMapGUI _guiManager; 
 	private Cell _activeCell;
-	private int _activeOcupant;
+	private Ocupant _activeOcupant;
 	public override void _Ready()
 	{
 		_activeCell = null;
-		_activeOcupant = -1;
-	}
+		_activeOcupant = null;
 
+	}
+	
 	public void MakeActiveCell(Vector2I clickedCell)
 	{
 		GD.Print(clickedCell);
@@ -31,28 +33,18 @@ public partial class CellManager : Node
 
 	public void MakeActiveOcupant(int ocuId)
 	{
-		_activeOcupant = ocuId;
+		_activeOcupant = GetNode<Ocupant>($"{_activeCell.Name}/{ocuId}");
 	}
-	public void MoveActiveOcupant(Vector2I newParentCell, Vector2 newPosition)
+
+	public void OrderOcupantMovement(Vector2I newParentCell)
 	{
 		_guiManager.CloseOpenPanels();
 		
-		Ocupant ocu = GetNode<Ocupant>($"{_activeCell.Name}/{_activeOcupant}");
-		Cell newParentNode = GetNodeOrNull<Cell>($"{newParentCell.X},{newParentCell.Y}");
-		if (newParentNode == null)
-		{
-			PackedScene cellScene = ResourceLoader.Load<PackedScene>("res://gameplay/cell.tscn");
-			newParentNode = cellScene.Instantiate<Cell>();
-			newParentNode.Name = $"{newParentCell.X},{newParentCell.Y}";
-			AddChild(newParentNode);
-			newParentNode.Position = newPosition;
-		}
-		ocu.Reparent(GetNode($"{newParentNode.Name}"));
-		
-		DeleteActiveCellIfNoChildren();
-		
-		_activeCell = null;
-		_activeOcupant = -1;
+		MoveReq requester = GetNode<MoveReq>("MoveReq");
+		requester.RequestMoveAction(new MoveCosas(1,
+															_activeOcupant.Name,
+                                    					 _activeCell.GetCellCoords(),
+														newParentCell));
 	}
 
 	public void LoadCells(Array<ProtoCell> cellToLoad)
@@ -77,4 +69,5 @@ public partial class CellManager : Node
 			_activeCell.QueueFree();	
 		}
 	}
+
 }

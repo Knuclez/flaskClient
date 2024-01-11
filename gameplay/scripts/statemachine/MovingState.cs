@@ -16,8 +16,7 @@ public partial class MovingState : State
 			if (!mb.IsPressed())
 			{
 				Vector2I clickedCell = _tileMap.LocalToMap(mb.GlobalPosition);
-				Vector2 pos = _tileMap.MapToLocal(clickedCell);
-				_cellManager.MoveActiveOcupant(clickedCell, pos);
+				_cellManager.OrderOcupantMovement(clickedCell);
 				return _idleState;
 			}
 		}

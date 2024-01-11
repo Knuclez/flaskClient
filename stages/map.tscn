@@ -1,14 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://btqokhuwljh8a"]
+[gd_scene load_steps=15 format=3 uid="uid://btqokhuwljh8a"]
 
 [ext_resource type="Script" path="res://stages/scripts/Map.cs" id="1_vt4rm"]
 [ext_resource type="Texture2D" uid="uid://bbpbo26f2e1o2" path="res://stages/images/basic_tiles2.png" id="2_pdqln"]
 [ext_resource type="Texture2D" uid="uid://bp814xsfj7cdl" path="res://gameplay/art/prophet.png" id="3_7k386"]
+[ext_resource type="Script" path="res://gameplay/scripts/http/MoveReq.cs" id="5_6pglq"]
 [ext_resource type="Script" path="res://gameplay/scripts/CellManager.cs" id="5_x76i6"]
 [ext_resource type="Script" path="res://gameplay/scripts/statemachine/StateMachine.cs" id="7_0xsjf"]
 [ext_resource type="Script" path="res://GUI/scripts/InMapGUI.cs" id="7_735la"]
 [ext_resource type="Script" path="res://gameplay/scripts/statemachine/InCellState.cs" id="8_6h2xu"]
 [ext_resource type="Script" path="res://gameplay/scripts/statemachine/IdleState.cs" id="8_gnbgb"]
 [ext_resource type="Script" path="res://gameplay/scripts/statemachine/MovingState.cs" id="9_slvvq"]
+[ext_resource type="Script" path="res://gameplay/scripts/TurnManager.cs" id="10_su34c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o70oi"]
 resource_name = "basic tiles"
@@ -51,6 +53,11 @@ layer_1/tile_data = PackedInt32Array()
 [node name="CellManager" type="Node" parent="." node_paths=PackedStringArray("_guiManager")]
 script = ExtResource("5_x76i6")
 _guiManager = NodePath("../gui")
+
+[node name="MoveReq" type="Node" parent="CellManager"]
+script = ExtResource("5_6pglq")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="CellManager/MoveReq"]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initialState")]
 script = ExtResource("7_0xsjf")
@@ -96,3 +103,6 @@ offset_bottom = 49.0
 text = "X"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="TurnManager" type="Node" parent="."]
+script = ExtResource("10_su34c")
