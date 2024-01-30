@@ -8,6 +8,7 @@ public partial class CellManager : Node
     [Export] private InMapGUI _guiManager; 
 	private Cell _activeCell;
 	private Ocupant _activeOcupant;
+	private Ocupant _agressedOcupant;
 	public override void _Ready()
 	{
 		_activeCell = null;
@@ -36,38 +37,63 @@ public partial class CellManager : Node
 		_activeOcupant = GetNode<Ocupant>($"{_activeCell.Name}/{ocuId}");
 	}
 
+	public Ocupant GetActiveOcupant()
+	{
+		return _activeOcupant;
+	}
+
+	public Vector2I GetActiveCell()
+	{
+		return _activeCell.GetCellCoords();
+	}
+
+	public Cell GetActiveCellTyped()
+	{
+		return _activeCell;
+	}
+	
 	public void OrderOcupantMovement(Vector2I newParentCell)
 	{
 		_guiManager.CloseOpenPanels();
 		
 		MoveReq requester = GetNode<MoveReq>("MoveReq");
-		requester.RequestMoveAction(new MoveCosas(1,
-															_activeOcupant.Name,
+		requester.RequestMoveAction(new MoveCosas(_activeOcupant.Name,
                                     					 _activeCell.GetCellCoords(),
 														newParentCell));
 	}
 
 	public void LoadCells(Array<ProtoCell> cellToLoad)
 	{
+		
 		PackedScene cellScene = ResourceLoader.Load<PackedScene>("res://gameplay/cell.tscn");
 		TileMap tilemap = GetNode<TileMap>("/root/map/TileMap");
-		foreach (var cellTL in cellToLoad)
+		
+		foreach (ProtoCell cellTL in cellToLoad)
 		{
-			Cell celInstance = cellScene.Instantiate<Cell>();
-			celInstance.Init(cellTL);
-			celInstance.GlobalPosition = tilemap.MapToLocal(celInstance.GetCellCoords());
-			AddChild(celInstance);
+			if (CellAlreadyExists(cellTL.position))
+			{
+				GetNode<Cell>(cellTL.position).LoadOcupants(cellTL.ocupants);	
+			}
+			else
+			{
+				Cell celInstance = cellScene.Instantiate<Cell>();
+				celInstance.Init(cellTL);
+				celInstance.GlobalPosition = tilemap.MapToLocal(celInstance.GetCellCoords());
+				AddChild(celInstance);
+			}
 			
 		}	
+		
 	}
-
-	private void DeleteActiveCellIfNoChildren()
+	
+	private bool CellAlreadyExists(string position)
 	{
-		//count igual a uno por q siempre esta el sprite
-		if (_activeCell.GetChildren().Count == 1)
+		if (GetNodeOrNull(position) != null)
 		{
-			_activeCell.QueueFree();	
+			return true;
 		}
+
+		return false;
 	}
 
 }

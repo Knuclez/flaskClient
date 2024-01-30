@@ -6,6 +6,7 @@ public partial class InCellState : State
     [Export] private State _idleState;
     [Export] private State _movingState;
     
+    
     [Export] private CellManager _cellManager;
     [Export] private TileMap _tileMap;
 
@@ -31,9 +32,14 @@ public partial class InCellState : State
 		    _cellManager.MakeActiveCell(new Vector2I(-404,-404));
 		    return _idleState;
 	    }
-	    else if (evento == "moving_button")
+	    if (evento == "moving_button")
 	    {
 		    return _movingState;
+	    }
+
+	    if (evento == "attack_button")
+	    {
+		    return _idleState;
 	    }
 	    return null;
     }

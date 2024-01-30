@@ -8,14 +8,8 @@ public partial class TurnManager : Node
 	{
 	}
 
-	public void PassTurn()
+	private void OnPassTurnButton()
 	{
-		CallTurnPassInSv();
-		_turn++;
-	}
-
-	private void CallTurnPassInSv()
-	{
-		
+		GetNode<HttpRequest>("HTTPRequest").Request("http://127.0.0.1:8000/passturn");
 	}
 }

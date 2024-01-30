@@ -49,4 +49,14 @@ public partial class StateMachine : Node
 			ChangeState(newState);
 		}
 	}
+
+
+	public void OnAttackButton()
+	{
+		State newState = _currentState.CustomEvent("attack_button");
+		if (newState != null)
+		{
+			ChangeState(newState);
+		}
+	}
 }

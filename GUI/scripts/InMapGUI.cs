@@ -45,6 +45,21 @@ public partial class InMapGUI : Node
 		}
 	}
 
+	public void OpenBuildingPanel()
+	{
+		PackedScene inBuildingScene = ResourceLoader.Load<PackedScene>("res://GUI/in_building.tscn");
+
+		CellManager cm = GetNode<CellManager>("/root/map/CellManager");
+		Ocupant ocu = cm.GetActiveOcupant();
+		Vector2I cellCoords = cm.GetActiveCell();	
+		//la flag[1] es la de si es building
+		if (ocu.GetFlag(1) == 1)
+		{
+			InBuildingGUI bGUI = inBuildingScene.Instantiate<InBuildingGUI>();
+			bGUI.Init(ocu, cellCoords);
+			AddChild(bGUI);
+		}
+	}
 	public void PopConfirmation()
 	{
 		GD.Print("ha sucedio");

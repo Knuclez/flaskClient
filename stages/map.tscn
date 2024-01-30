@@ -1,8 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://btqokhuwljh8a"]
+[gd_scene load_steps=17 format=3 uid="uid://btqokhuwljh8a"]
 
 [ext_resource type="Script" path="res://stages/scripts/Map.cs" id="1_vt4rm"]
 [ext_resource type="Texture2D" uid="uid://bbpbo26f2e1o2" path="res://stages/images/basic_tiles2.png" id="2_pdqln"]
-[ext_resource type="Texture2D" uid="uid://bp814xsfj7cdl" path="res://gameplay/art/prophet.png" id="3_7k386"]
+[ext_resource type="Texture2D" uid="uid://b5h8cje3mkgtr" path="res://stages/images/greenlocker.png" id="3_n6yph"]
 [ext_resource type="Script" path="res://gameplay/scripts/http/MoveReq.cs" id="5_6pglq"]
 [ext_resource type="Script" path="res://gameplay/scripts/CellManager.cs" id="5_x76i6"]
 [ext_resource type="Script" path="res://gameplay/scripts/statemachine/StateMachine.cs" id="7_0xsjf"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://gameplay/scripts/statemachine/IdleState.cs" id="8_gnbgb"]
 [ext_resource type="Script" path="res://gameplay/scripts/statemachine/MovingState.cs" id="9_slvvq"]
 [ext_resource type="Script" path="res://gameplay/scripts/TurnManager.cs" id="10_su34c"]
+[ext_resource type="Script" path="res://gameplay/scripts/Barracks.cs" id="12_awxwm"]
+[ext_resource type="Script" path="res://gameplay/scripts/BattleManager.cs" id="13_noryy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o70oi"]
 resource_name = "basic tiles"
@@ -19,9 +21,9 @@ texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
 1:0/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aa748"]
-texture = ExtResource("3_7k386")
-texture_region_size = Vector2i(1024, 1024)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cmwpb"]
+texture = ExtResource("3_n6yph")
+texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_n2n7g"]
@@ -29,10 +31,12 @@ tile_shape = 1
 tile_layout = 5
 tile_size = Vector2i(64, 32)
 sources/0 = SubResource("TileSetAtlasSource_o70oi")
-sources/2 = SubResource("TileSetAtlasSource_aa748")
+sources/1 = SubResource("TileSetAtlasSource_cmwpb")
 
 [node name="map" type="Node2D"]
 script = ExtResource("1_vt4rm")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -89,20 +93,47 @@ script = ExtResource("7_735la")
 visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_left = 820.0
-offset_top = 35.0
-offset_right = 1114.0
-offset_bottom = 335.0
+offset_left = 822.0
+offset_top = 52.0
+offset_right = 1116.0
+offset_bottom = 352.0
 
 [node name="close" type="Button" parent="gui/cellControl"]
 layout_mode = 0
-offset_left = 249.0
-offset_top = 18.0
-offset_right = 276.0
-offset_bottom = 49.0
+offset_left = 258.0
+offset_top = -25.0
+offset_right = 285.0
+offset_bottom = 6.0
 text = "X"
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="RefreshButton" type="Button" parent="gui"]
+offset_left = 1043.0
+offset_top = 576.0
+offset_right = 1130.0
+offset_bottom = 628.0
+text = "Refresh"
+
+[node name="PassTurnButton" type="Button" parent="gui"]
+offset_left = 928.0
+offset_top = 578.0
+offset_right = 1008.0
+offset_bottom = 632.0
+text = "Pass
+ Turn"
 
 [node name="TurnManager" type="Node" parent="."]
 script = ExtResource("10_su34c")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="TurnManager"]
+
+[node name="Barracks" type="Node" parent="."]
+script = ExtResource("12_awxwm")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="Barracks"]
+
+[node name="BattleManager" type="Node" parent="."]
+script = ExtResource("13_noryy")
+
+[connection signal="button_up" from="gui/cellControl/close" to="StateMachine" method="OnCloseButton"]
+[connection signal="button_up" from="gui/RefreshButton" to="." method="OnRefreshButton"]
+[connection signal="button_up" from="gui/PassTurnButton" to="TurnManager" method="OnPassTurnButton"]

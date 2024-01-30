@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Newtonsoft.Json;
 
 public partial class Gateway : Node
 {
@@ -14,14 +15,15 @@ public partial class Gateway : Node
 	{
 		GD.Print(responseCode);
 		string stringedBody = System.Text.Encoding.UTF8.GetString(body);
-		if (stringedBody == "1")
+		if (stringedBody == "no-user")
 		{
 			PopUIAlert("Wrong credentials");
 			return;
 		}
 
+		ProtoUser pUser = JsonConvert.DeserializeObject<ProtoUser>(stringedBody);
 		User userSingleton = GetNode<User>("/root/User");
-		userSingleton.SetUsername(stringedBody);
+		userSingleton.Init(pUser);
 
 		GetTree().ChangeSceneToFile("res://stages/landing.tscn");
 	}

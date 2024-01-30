@@ -21,6 +21,12 @@ public partial class Map : Node
 	{
 	}
 
+
+	private void OnRefreshButton()
+	{
+		RequestCellInfo();
+	}
+	
 	private void RequestCellInfo()
 	{
 		_requester.Request("http://127.0.0.1:8000/cells");

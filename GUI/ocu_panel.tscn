@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://GUI/scripts/OcupantActions.cs" id="1_urlhh"]
 
 [node name="ocuPanel" type="Panel"]
-offset_right = 188.0
-offset_bottom = 40.0
+offset_right = 268.0
+offset_bottom = 44.0
 script = ExtResource("1_urlhh")
 
 [node name="Label" type="Label" parent="."]
@@ -15,10 +15,37 @@ offset_right = 136.0
 offset_bottom = 36.0
 text = "testo de relleno"
 
-[node name="Button" type="Button" parent="."]
+[node name="MoveButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 144.0
 offset_top = 6.0
 offset_right = 180.0
 offset_bottom = 35.0
 text = "M"
+
+[node name="EnterButton" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 186.0
+offset_top = 7.0
+offset_right = 222.0
+offset_bottom = 38.0
+text = "E"
+
+[node name="AttackButton" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 228.0
+offset_top = 6.0
+offset_right = 264.0
+offset_bottom = 37.0
+text = "A"
+
+[node name="ownerLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 279.0
+offset_top = 10.0
+offset_right = 304.0
+offset_bottom = 41.0
+text = "a"
